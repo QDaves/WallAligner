@@ -18,3 +18,5 @@
   2. Run WallAligner
   3. Enter a room
   4. Select wall items and drag to move, or use the tools to create patterns
+<img width="400" height="400" alt="screenshot" src="https://github.com/user-attachments/assets/0459a755-1afc-4ded-aa8a-e73be18de4c3" />
+<img width="816" height="639" alt="WallAligner_64_IgAaFjHcnu" src="https://github.com/user-attachments/assets/df7d37d2-152b-4220-8a97-023df8d04948" />
