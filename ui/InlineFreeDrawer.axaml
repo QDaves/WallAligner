@@ -1,0 +1,72 @@
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  x:Class="WallAligner.InlineFreeDrawer"
+  Background="Transparent"
+  Width="420"
+  IsHitTestVisible="True"
+  ClipToBounds="False"
+>
+  <Border CornerRadius="12" BorderBrush="#444" BorderThickness="1" Background="#EE1a1a1a" ClipToBounds="True">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Border Grid.Row="0" Background="#252525" CornerRadius="12,12,0,0" Padding="12,8" x:Name="titlebar" Cursor="Hand">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="Free Draw / Shapes" Foreground="#ddd" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          <Button Grid.Column="1" x:Name="closebtn" Content="×" Width="26" Height="26" Background="#333" BorderThickness="0" Foreground="#aaa" FontSize="16" Padding="0" VerticalAlignment="Center" CornerRadius="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+      </Border>
+
+      <StackPanel Grid.Row="1" Spacing="10" Margin="14,12,14,14">
+        <StackPanel Spacing="4">
+          <TextBlock Text="Furniture:" Foreground="#999" FontSize="10" FontWeight="SemiBold"/>
+          <AutoCompleteBox x:Name="furniinput" Background="#222" BorderBrush="#3a3a3a" Foreground="#eee" FontSize="11" Padding="8,6" Watermark="Select furniture type..." CornerRadius="6"/>
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <TextBlock Text="Add Shape:" Foreground="#999" FontSize="10" FontWeight="SemiBold"/>
+          <WrapPanel Orientation="Horizontal">
+            <Button x:Name="addrectbtn" Background="#2a3a4a" BorderBrush="#3a5a6a" BorderThickness="1" CornerRadius="6" Padding="8,6" Margin="0,0,6,6" ToolTip.Tip="Rectangle">
+              <Viewbox Width="16" Height="16">
+                <Path Fill="#ccc" Data="M3,3 L21,3 L21,18 L3,18 Z M5,5 L5,16 L19,16 L19,5 Z"/>
+              </Viewbox>
+            </Button>
+            <Button x:Name="addcirclebtn" Background="#2a3a4a" BorderBrush="#3a5a6a" BorderThickness="1" CornerRadius="6" Padding="8,6" Margin="0,0,6,6" ToolTip.Tip="Circle">
+              <Viewbox Width="16" Height="16">
+                <Path Fill="#ccc" Data="M12,2 A10,10 0 1,1 12,22 A10,10 0 1,1 12,2 M12,4 A8,8 0 1,0 12,20 A8,8 0 1,0 12,4"/>
+              </Viewbox>
+            </Button>
+            <Button x:Name="addstarbtn" Background="#2a3a4a" BorderBrush="#3a5a6a" BorderThickness="1" CornerRadius="6" Padding="8,6" Margin="0,0,6,6" ToolTip.Tip="Star">
+              <Viewbox Width="16" Height="16">
+                <Path Fill="#ccc" Data="M12,2 L14.5,9 L22,9 L16,14 L18.5,22 L12,17 L5.5,22 L8,14 L2,9 L9.5,9 Z"/>
+              </Viewbox>
+            </Button>
+            <Button x:Name="addtribtn" Background="#2a3a4a" BorderBrush="#3a5a6a" BorderThickness="1" CornerRadius="6" Padding="8,6" Margin="0,0,6,6" ToolTip.Tip="Triangle">
+              <Viewbox Width="16" Height="16">
+                <Path Fill="#ccc" Data="M12,3 L22,21 L2,21 Z M12,7 L6,19 L18,19 Z"/>
+              </Viewbox>
+            </Button>
+            <Button x:Name="addheartbtn" Background="#2a3a4a" BorderBrush="#3a5a6a" BorderThickness="1" CornerRadius="6" Padding="8,6" Margin="0,0,6,6" ToolTip.Tip="Heart">
+              <Viewbox Width="16" Height="16">
+                <Path Fill="#ccc" Data="M12,21 C12,21 3,14 3,8.5 C3,5.5 5.5,3 8.5,3 C10.5,3 12,4.5 12,4.5 C12,4.5 13.5,3 15.5,3 C18.5,3 21,5.5 21,8.5 C21,14 12,21 12,21 Z"/>
+              </Viewbox>
+            </Button>
+          </WrapPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="20">
+          <TextBlock x:Name="itemcountlabel" Text="Items: 0" Foreground="#666" FontSize="10"/>
+          <TextBlock x:Name="pointslabel" Text="Objects: 0 | Points: 0" Foreground="#666" FontSize="10"/>
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>

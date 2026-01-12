@@ -1,0 +1,68 @@
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  x:Class="WallAligner.InlineSvgLoader"
+  Background="Transparent"
+  Width="420"
+  IsHitTestVisible="True"
+  ClipToBounds="False"
+>
+  <Border CornerRadius="12" BorderBrush="#444" BorderThickness="1" Background="#EE1a1a1a" ClipToBounds="True">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Border Grid.Row="0" Background="#252525" CornerRadius="12,12,0,0" Padding="12,8" x:Name="titlebar" Cursor="Hand">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Text="SVG/Image Loader" Foreground="#ddd" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          <Button Grid.Column="1" x:Name="closebtn" Content="×" Width="26" Height="26" Background="#333" BorderThickness="0" Foreground="#aaa" FontSize="16" Padding="0" VerticalAlignment="Center" CornerRadius="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+      </Border>
+
+      <StackPanel Grid.Row="1" Spacing="10" Margin="14,12,14,14">
+        <StackPanel Spacing="4">
+          <TextBlock Text="SVG/Image File:" Foreground="#999" FontSize="10" FontWeight="SemiBold"/>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="filepath" Grid.Column="0" Watermark="Path to SVG or image..." Background="#222" BorderBrush="#3a3a3a" Foreground="#eee" FontSize="11" Padding="8,6" Margin="0,0,8,0" CornerRadius="6"/>
+            <Button x:Name="browsebtn" Grid.Column="1" Content="Browse" Background="#1a5070" BorderBrush="#2a6a8a" BorderThickness="1" CornerRadius="6" Padding="12,6" FontSize="10" Foreground="#ddd"/>
+          </Grid>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+          <Border Height="1" Width="80" Background="#333" VerticalAlignment="Center"/>
+          <TextBlock Text=" OR " Foreground="#555" FontSize="9" Margin="8,0"/>
+          <Border Height="1" Width="80" Background="#333" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <TextBlock Text="SVG Path Data:" Foreground="#999" FontSize="10" FontWeight="SemiBold"/>
+          <TextBox x:Name="pathdata" Watermark="Paste SVG path (d attribute or full SVG)..." Background="#222" BorderBrush="#3a3a3a" Foreground="#eee" FontSize="10" Padding="8,6" CornerRadius="6" AcceptsReturn="True" TextWrapping="Wrap" Height="60"/>
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <TextBlock Text="Furniture:" Foreground="#999" FontSize="10" FontWeight="SemiBold"/>
+          <AutoCompleteBox x:Name="furniinput" Background="#222" BorderBrush="#3a3a3a" Foreground="#eee" FontSize="11" Padding="8,6" Watermark="Select furniture type..." CornerRadius="6"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="20">
+          <StackPanel Spacing="4">
+            <TextBlock Text="Preview Limit:" Foreground="#999" FontSize="10" FontWeight="SemiBold"/>
+            <TextBox x:Name="previewlimitbox" Text="150" Background="#222" BorderBrush="#3a3a3a" Foreground="#eee" FontSize="11" Padding="8,6" Watermark="150" CornerRadius="6" Width="80"/>
+          </StackPanel>
+          <TextBlock x:Name="itemcountlabel" Text="Items: 0" Foreground="#666" FontSize="10" VerticalAlignment="Bottom" Margin="0,0,0,6"/>
+          <TextBlock x:Name="modelabel" Text="" Foreground="#4a7a5a" FontSize="10" VerticalAlignment="Bottom" Margin="0,0,0,6"/>
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>
