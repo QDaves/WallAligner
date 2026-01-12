@@ -23,14 +23,13 @@ public class Extension : GEarthExtension
     {
         Room = new RoomManager(this);
         Gamedata = new GameDataManager();
-        Task.Run(() => preloadfurnidata());
     }
 
-    private async void preloadfurnidata()
+    private async void loadfurnidata()
     {
         try
         {
-            var hotel = Hotel.All["us"];
+            var hotel = Hotel.All[Region];
             await Gamedata.LoadAsync(hotel);
 
             if (Gamedata.Furni != null && Gamedata.Texts != null)
@@ -48,15 +47,17 @@ public class Extension : GEarthExtension
 
         Region = e.Host switch
         {
-            var host when host.Contains("game-br.") => "com.br",
-            var host when host.Contains("game-tr.") => "com.tr",
+            var host when host.Contains("game-br.") => "br",
+            var host when host.Contains("game-tr.") => "tr",
             var host when host.Contains("game-es.") => "es",
             var host when host.Contains("game-fi.") => "fi",
             var host when host.Contains("game-it.") => "it",
             var host when host.Contains("game-nl.") => "nl",
             var host when host.Contains("game-de.") => "de",
             var host when host.Contains("game-fr.") => "fr",
-            _ => "com"
+            _ => "us"
         };
+
+        Task.Run(() => loadfurnidata());
     }
 }
