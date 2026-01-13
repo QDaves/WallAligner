@@ -8,10 +8,12 @@ namespace WallAligner.Core;
 
 public class Extension : GEarthExtension
 {
-    public string Region { get; private set; } = "com";
+    public Hotel CurrentHotel { get; private set; } = Hotel.None;
     public RoomManager Room { get; private set; }
     public GameDataManager Gamedata { get; private set; }
     public bool Gamedataloaded { get; private set; } = false;
+    private bool isloading = false;
+    private Hotel loadedhotel = Hotel.None;
 
     public Extension() : base(new GEarthOptions
     {
@@ -27,37 +29,42 @@ public class Extension : GEarthExtension
 
     private async void loadfurnidata()
     {
+        if (isloading) return;
+
         try
         {
-            var hotel = Hotel.All[Region];
-            await Gamedata.LoadAsync(hotel);
+            isloading = true;
+
+            if (CurrentHotel == Hotel.None) return;
+
+            if (Gamedataloaded && loadedhotel == CurrentHotel) return;
+
+            if (loadedhotel != CurrentHotel)
+            {
+                Gamedataloaded = false;
+                Gamedata = new GameDataManager();
+            }
+
+            await Gamedata.LoadAsync(CurrentHotel);
 
             if (Gamedata.Furni != null && Gamedata.Texts != null)
             {
                 Extensions.Initialize(Gamedata);
                 Gamedataloaded = true;
+                loadedhotel = CurrentHotel;
             }
         }
         catch { }
+        finally
+        {
+            isloading = false;
+        }
     }
 
     protected override void OnConnected(ConnectedEventArgs e)
     {
         base.OnConnected(e);
-
-        Region = e.Host switch
-        {
-            var host when host.Contains("game-br.") => "br",
-            var host when host.Contains("game-tr.") => "tr",
-            var host when host.Contains("game-es.") => "es",
-            var host when host.Contains("game-fi.") => "fi",
-            var host when host.Contains("game-it.") => "it",
-            var host when host.Contains("game-nl.") => "nl",
-            var host when host.Contains("game-de.") => "de",
-            var host when host.Contains("game-fr.") => "fr",
-            _ => "us"
-        };
-
+        CurrentHotel = Hotel.FromGameHost(e.Host);
         Task.Run(() => loadfurnidata());
     }
 }
