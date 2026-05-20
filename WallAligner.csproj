@@ -25,10 +25,60 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.7" />
     <PackageReference Include="Avalonia.Skia" Version="11.0.7" />
     <PackageReference Include="SkiaSharp" Version="2.88.7" />
-    <PackageReference Include="Xabbo.Common" Version="1.0.4" />
-    <PackageReference Include="Xabbo.Core" Version="1.0.0-beta.364" />
     <PackageReference Include="Xabbo.GEarth" Version="1.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="lib\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <None Remove="lib\**" />
+    <AvaloniaResource Remove="lib\**" />
+    <AvaloniaXaml Remove="lib\**" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <XabboCoreRepo Condition="'$(XabboCoreRepo)' == ''">https://github.com/QDaves/core-xabbo</XabboCoreRepo>
+    <XabboCoreRoot>$(MSBuildThisFileDirectory)lib\core\</XabboCoreRoot>
+    <XabboCoreDir>$(XabboCoreRoot)src\Xabbo.Core\</XabboCoreDir>
+    <XabboCoreBinDir>$(XabboCoreDir)bin\Release\net8.0\</XabboCoreBinDir>
+  </PropertyGroup>
+
+  <Target Name="FetchXabboCore" BeforeTargets="ResolveAssemblyReferences"
+          Condition="!Exists('$(XabboCoreDir)Xabbo.Core.csproj')">
+    <Message Text="Cloning $(XabboCoreRepo) into lib\core..." Importance="high" />
+    <Exec Command="git clone --recursive $(XabboCoreRepo) &quot;$(XabboCoreRoot.TrimEnd('\'))&quot;" />
+  </Target>
+
+  <Target Name="BuildXabboCore" AfterTargets="FetchXabboCore" BeforeTargets="ResolveAssemblyReferences"
+          Inputs="$(XabboCoreDir)Xabbo.Core.csproj"
+          Outputs="$(XabboCoreBinDir)Xabbo.Core.dll">
+    <Exec Command="dotnet build &quot;$(XabboCoreDir)Xabbo.Core.csproj&quot; -c Release --nologo -v q /p:Version=1.0.5 /p:AssemblyVersion=1.0.5.0 /p:FileVersion=1.0.5.0" />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="Xabbo.Core">
+      <HintPath>$(XabboCoreBinDir)Xabbo.Core.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Xabbo.Common">
+      <HintPath>$(XabboCoreBinDir)Xabbo.Common.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Xabbo.Messages">
+      <HintPath>$(XabboCoreBinDir)Xabbo.Messages.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CopyPatchedXabboDlls" AfterTargets="Build;Publish">
+    <ItemGroup>
+      <_PatchedXabboDlls Include="$(XabboCoreBinDir)Xabbo.Core.dll" />
+      <_PatchedXabboDlls Include="$(XabboCoreBinDir)Xabbo.Common.dll" />
+      <_PatchedXabboDlls Include="$(XabboCoreBinDir)Xabbo.Messages.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_PatchedXabboDlls)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(_PatchedXabboDlls)" DestinationFolder="$(PublishDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition="'$(PublishDir)' != ''" />
+  </Target>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" />
