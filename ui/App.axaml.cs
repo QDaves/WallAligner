@@ -1,5 +1,4 @@
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -7,76 +6,37 @@ using WallAligner.Core;
 
 namespace WallAligner;
 
-public class App : Application
+public sealed class App : Application
 {
-    private Extension? extension;
-    private MainWindow? window;
-    private IClassicDesktopStyleApplicationLifetime? desktop;
-    private bool running;
+    CancellationTokenSource? lifetime;
+    WallSession? session;
 
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktoplifetime)
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop = desktoplifetime;
-            Task.Run(start);
+            lifetime = new();
+            session = new(Program.arguments);
+            var window = new MainWindow(session);
+            desktop.MainWindow = window;
+            session.activated += () => Dispatcher.UIThread.Post(() => { window.Show(); window.Activate(); });
+            desktop.Exit += (_, _) =>
+            {
+                lifetime.Cancel();
+                session.DisposeAsync().AsTask().GetAwaiter().GetResult();
+                lifetime.Dispose();
+            };
+            _ = start(window, lifetime.Token);
         }
         base.OnFrameworkInitializationCompleted();
     }
 
-    private async void start()
+    async Task start(MainWindow window, CancellationToken token)
     {
-        try
-        {
-            extension = new Extension();
-
-            extension.Activated += () =>
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    if (window == null)
-                    {
-                        window = new MainWindow(extension);
-                        window.Closing += onclose;
-                        if (desktop != null)
-                            desktop.MainWindow = window;
-                    }
-                    window.Show();
-                    window.Activate();
-                });
-            };
-
-            running = true;
-            extension.Run();
-        }
-        catch { }
-        finally
-        {
-            running = false;
-            await Task.Delay(2000);
-            desktop?.Shutdown();
-        }
-    }
-
-    private void onclose(object? sender, WindowClosingEventArgs e)
-    {
-        if (e.CloseReason is not WindowCloseReason.WindowClosing)
-            return;
-
-        if (!running)
-        {
-            desktop?.Shutdown();
-        }
-        else
-        {
-            e.Cancel = true;
-            if (sender is Window w)
-                w.Hide();
-        }
+        try { await session!.start(token); }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { }
+        catch (Exception error) { Dispatcher.UIThread.Post(() => window.show_status(error.Message)); }
     }
 }

@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="WallAligner.GridView">
+  <Grid Margin="16" RowDefinitions="*,Auto" ColumnDefinitions="*,250" ColumnSpacing="16" RowSpacing="12">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" RowSpacing="7">
+      <ComboBox x:Name="grid_furniture" />
+      <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="6">
+        <Button x:Name="grid_import_type" Content="Add type" />
+        <Button x:Name="grid_from_selection" Grid.Column="1" Content="Use selection" />
+      </Grid>
+      <ComboBox x:Name="grid_groups" Grid.Row="2" PlaceholderText="Detected ID groups" />
+      <TextBox x:Name="grid_ids" Grid.Row="3" AcceptsReturn="True" Height="125" TextWrapping="Wrap" PlaceholderText="Furniture IDs, one per line" />
+      <Grid Grid.Row="4" RowDefinitions="Auto,Auto,*" RowSpacing="7">
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+          <ToggleButton x:Name="grid_capture" Content="Capture IDs" />
+          <Button x:Name="grid_sort" Grid.Column="1" Content="Sort IDs" />
+        </Grid>
+        <TextBlock Grid.Row="1" Text="Cells" FontWeight="SemiBold" Margin="0,5,0,0" />
+        <ListBox x:Name="grid_cells" Grid.Row="2" MinHeight="100" />
+      </Grid>
+      <Grid Grid.Row="5" ColumnDefinitions="*,*,Auto" ColumnSpacing="6">
+        <TextBox x:Name="cell_column" Classes="number" Text="0" ToolTip.Tip="Selected cell column" />
+        <TextBox x:Name="cell_row" Grid.Column="1" Classes="number" Text="0" ToolTip.Tip="Selected cell row" />
+        <Button x:Name="grid_set_cell" Grid.Column="2" Content="Set cell" />
+      </Grid>
+    </Grid>
+    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+          <StackPanel Spacing="5"><TextBlock Text="Columns" /><Grid ColumnDefinitions="28,*,28" ColumnSpacing="3">
+  <RepeatButton x:Name="grid_columns_less" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Decrease"><Path Data="M0,4 L8,4" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+  <TextBox x:Name="grid_columns" Grid.Column="1" Classes="number" Text="5" MinWidth="0" Padding="2,7" VerticalContentAlignment="Center" />
+  <RepeatButton x:Name="grid_columns_more" Grid.Column="2" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Increase"><Path Data="M0,4 L8,4 M4,0 L4,8" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+</Grid></StackPanel>
+          <StackPanel Grid.Column="1" Spacing="5"><TextBlock Text="Rows" /><Grid ColumnDefinitions="28,*,28" ColumnSpacing="3">
+  <RepeatButton x:Name="grid_rows_less" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Decrease"><Path Data="M0,4 L8,4" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+  <TextBox x:Name="grid_rows" Grid.Column="1" Classes="number" Text="5" MinWidth="0" Padding="2,7" VerticalContentAlignment="Center" />
+  <RepeatButton x:Name="grid_rows_more" Grid.Column="2" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Increase"><Path Data="M0,4 L8,4 M4,0 L4,8" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+</Grid></StackPanel>
+        </Grid>
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+          <StackPanel Spacing="5"><TextBlock Text="Spacing X" /><Grid ColumnDefinitions="28,*,28" ColumnSpacing="3">
+  <RepeatButton x:Name="grid_spacing_x_less" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Decrease"><Path Data="M0,4 L8,4" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+  <TextBox x:Name="grid_spacing_x" Grid.Column="1" Classes="number" Text="8" MinWidth="0" Padding="2,7" VerticalContentAlignment="Center" />
+  <RepeatButton x:Name="grid_spacing_x_more" Grid.Column="2" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Increase"><Path Data="M0,4 L8,4 M4,0 L4,8" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+</Grid></StackPanel>
+          <StackPanel Grid.Column="1" Spacing="5"><TextBlock Text="Spacing Y" /><Grid ColumnDefinitions="28,*,28" ColumnSpacing="3">
+  <RepeatButton x:Name="grid_spacing_y_less" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Decrease"><Path Data="M0,4 L8,4" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+  <TextBox x:Name="grid_spacing_y" Grid.Column="1" Classes="number" Text="8" MinWidth="0" Padding="2,7" VerticalContentAlignment="Center" />
+  <RepeatButton x:Name="grid_spacing_y_more" Grid.Column="2" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Increase"><Path Data="M0,4 L8,4 M4,0 L4,8" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+</Grid></StackPanel>
+        </Grid>
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+          <StackPanel Spacing="5"><TextBlock Text="Column slope" /><Grid ColumnDefinitions="28,*,28" ColumnSpacing="3">
+  <RepeatButton x:Name="grid_offset_less" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Decrease"><Path Data="M0,4 L8,4" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+  <TextBox x:Name="grid_offset" Grid.Column="1" Classes="number" Text="0" MinWidth="0" Padding="2,7" VerticalContentAlignment="Center" />
+  <RepeatButton x:Name="grid_offset_more" Grid.Column="2" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Increase"><Path Data="M0,4 L8,4 M4,0 L4,8" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+</Grid></StackPanel>
+          <StackPanel Grid.Column="1" Spacing="5"><TextBlock Text="Layer" /><Grid ColumnDefinitions="28,*,28" ColumnSpacing="3">
+  <RepeatButton x:Name="grid_layer_less" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Decrease"><Path Data="M0,4 L8,4" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+  <TextBox x:Name="grid_layer" Grid.Column="1" Classes="number" Text="0" MinWidth="0" Padding="2,7" VerticalContentAlignment="Center" />
+  <RepeatButton x:Name="grid_layer_more" Grid.Column="2" Delay="350" Interval="85" ClickMode="Press" Padding="0" ToolTip.Tip="Increase"><Path Data="M0,4 L8,4 M4,0 L4,8" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.5" Width="8" Height="8" /></RepeatButton>
+</Grid></StackPanel>
+        </Grid>
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+          <ToggleButton x:Name="grid_pick" Content="Pick start" />
+          <Button x:Name="grid_rotate" Grid.Column="1" Content="Turn furniture" />
+        </Grid>
+        <Border Height="1" Background="{DynamicResource RuleBrush}" Margin="0,4" />
+        <Grid x:Name="grid_move_controls" ColumnDefinitions="42,42,42" RowDefinitions="38,38" ColumnSpacing="3" RowSpacing="3" HorizontalAlignment="Center">
+          <TextBox x:Name="grid_step" Classes="number" Text="1" MinWidth="0" Width="42" Height="34" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTip.Tip="Movement step" />
+          <RepeatButton x:Name="grid_up" Delay="300" Interval="70" ClickMode="Press" Grid.Column="1" ToolTip.Tip="Move grid up"><Path Data="M2,12 L10,4 L18,12 M10,4 L10,20" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></RepeatButton>
+          <RepeatButton x:Name="grid_left" Delay="300" Interval="70" ClickMode="Press" Grid.Row="1" ToolTip.Tip="Move grid left"><Path Data="M12,2 L4,10 L12,18 M4,10 L20,10" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></RepeatButton>
+          <RepeatButton x:Name="grid_down" Delay="300" Interval="70" ClickMode="Press" Grid.Column="1" Grid.Row="1" ToolTip.Tip="Move grid down"><Path Data="M2,8 L10,16 L18,8 M10,0 L10,16" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></RepeatButton>
+          <RepeatButton x:Name="grid_right" Delay="300" Interval="70" ClickMode="Press" Grid.Column="2" Grid.Row="1" ToolTip.Tip="Move grid right"><Path Data="M8,2 L16,10 L8,18 M0,10 L16,10" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></RepeatButton>
+        </Grid>
+        <TextBlock x:Name="grid_info" Classes="hint" Text="Add furniture or use the current selection." />
+      </StackPanel>
+    </ScrollViewer>
+    <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto,*,Auto,Auto" ColumnSpacing="8">
+      <Button x:Name="grid_load" Content="Load" MinWidth="75" />
+      <Button x:Name="grid_save" Grid.Column="1" Content="Save" MinWidth="75" />
+      <Button x:Name="grid_clear" Grid.Column="3" Content="Clear" MinWidth="75" />
+      <Button x:Name="grid_apply" Grid.Column="4" Classes="primary" Content="Apply grid" MinWidth="110" />
+    </Grid>
+  </Grid>
+</UserControl>

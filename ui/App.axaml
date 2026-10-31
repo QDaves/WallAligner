@@ -1,7 +1,147 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="WallAligner.App">
+             x:Class="WallAligner.App"
+             RequestedThemeVariant="Light">
+  <Application.Resources>
+    <Color x:Key="SystemAccentColor">#286B4A</Color>
+    <SolidColorBrush x:Key="PanelBrush">#F4F5F1</SolidColorBrush>
+    <SolidColorBrush x:Key="ChromeBrush">#E4E9E2</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderBrush">#BAC6BC</SolidColorBrush>
+    <SolidColorBrush x:Key="RuleBrush">#D5DDD5</SolidColorBrush>
+    <SolidColorBrush x:Key="TextBrush">#232B26</SolidColorBrush>
+    <SolidColorBrush x:Key="MutedBrush">#526158</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentBrush">#286B4A</SolidColorBrush>
+  </Application.Resources>
   <Application.Styles>
     <FluentTheme />
+    <Style Selector=":is(Button) /template/ ContentPresenter, ToggleButton /template/ ContentPresenter, ListBoxItem /template/ ContentPresenter">
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="Background" Duration="0:0:0.12" />
+          <BrushTransition Property="BorderBrush" Duration="0:0:0.12" />
+          <BrushTransition Property="Foreground" Duration="0:0:0.12" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="TextBox, ComboBox">
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="BorderBrush" Duration="0:0:0.12" />
+          <BrushTransition Property="Background" Duration="0:0:0.12" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="ToggleButton.pin Path">
+      <Setter Property="Transitions">
+        <Transitions><BrushTransition Property="Stroke" Duration="0:0:0.12" /></Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="Window">
+      <Setter Property="FontFamily" Value="Segoe UI, Noto Sans, sans-serif" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    </Style>
+    <Style Selector=":is(Button)">
+      <Setter Property="CornerRadius" Value="3" />
+      <Setter Property="Padding" Value="11,7" />
+      <Setter Property="MinHeight" Value="34" />
+      <Setter Property="Background" Value="#F0F2EE" />
+      <Setter Property="BorderBrush" Value="#CED5CE" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector=":is(Button):pointerover /template/ ContentPresenter, :is(Button):pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="#E4ECE3" />
+      <Setter Property="BorderBrush" Value="#AFBFAF" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    </Style>
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="#286B4A" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderBrush" Value="#286B4A" />
+    </Style>
+    <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#225D40" />
+      <Setter Property="BorderBrush" Value="#225D40" />
+      <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="Button.primary:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="#194830" />
+      <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="Button.flat">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="ToggleButton.tool">
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="10,6" />
+      <Setter Property="CornerRadius" Value="3" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="Background" Value="{DynamicResource PanelBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="ToggleButton.tool:checked /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+      <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="ToggleButton">
+      <Setter Property="MinHeight" Value="34" />
+      <Setter Property="CornerRadius" Value="3" />
+      <Setter Property="Padding" Value="11,7" />
+      <Setter Property="Background" Value="#F0F2EE" />
+      <Setter Property="BorderBrush" Value="#CED5CE" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+      <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="ToggleButton.pin Path">
+      <Setter Property="Stroke" Value="{DynamicResource TextBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.pin:checked Path">
+      <Setter Property="Stroke" Value="White" />
+    </Style>
+    <Style Selector="TextBlock.label">
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Margin" Value="0,12,0,5" />
+    </Style>
+    <Style Selector="TextBlock.hint">
+      <Setter Property="Foreground" Value="#526158" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="TextBox">
+      <Setter Property="CornerRadius" Value="3" />
+      <Setter Property="MinHeight" Value="34" />
+    </Style>
+    <Style Selector="TextBox.number">
+      <Setter Property="TextAlignment" Value="Center" />
+      <Setter Property="Padding" Value="6,7" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+      <Setter Property="Background" Value="White" />
+    </Style>
+    <Style Selector="TextBox.number.invalid">
+      <Setter Property="BorderBrush" Value="#A84638" />
+    </Style>
+    <Style Selector="TextBox.inline_editor">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+            <TextPresenter Name="PART_TextPresenter" Text="{TemplateBinding Text}" LineHeight="{TemplateBinding LineHeight}" TextWrapping="NoWrap" CaretBrush="{TemplateBinding CaretBrush}" SelectionBrush="{TemplateBinding SelectionBrush}" SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}" CaretIndex="{Binding CaretIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" SelectionStart="{Binding SelectionStart, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" SelectionEnd="{Binding SelectionEnd, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" VerticalAlignment="Top" HorizontalAlignment="Left" UseLayoutRounding="False" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="ComboBox">
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="MinHeight" Value="34" />
+    </Style>
   </Application.Styles>
 </Application>

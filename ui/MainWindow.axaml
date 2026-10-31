@@ -1,88 +1,179 @@
-<Window
-  xmlns="https://github.com/avaloniaui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:local="using:WallAligner.Core"
-  x:Class="WallAligner.MainWindow"
-  Title="Wall Aligner"
-  Icon="avares://WallAligner/WallAligner.png"
-  Width="900" Height="700"
-  MinWidth="800" MinHeight="600"
-  Topmost="False"
-  TransparencyLevelHint="Transparent"
-  ExtendClientAreaToDecorationsHint="True"
-  ExtendClientAreaChromeHints="PreferSystemChrome"
-  ExtendClientAreaTitleBarHeightHint="32"
-  Background="#CC0a0a0a"
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:WallAligner"
+        x:Class="WallAligner.MainView"
 >
-  <Grid x:Name="maingrid">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0" Spacing="10" ZIndex="999">
-      <Border Background="#CC1a1a1a" CornerRadius="4" Padding="10,4" BorderBrush="#333" BorderThickness="1">
-        <TextBlock Text="WALL ALIGNER" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Foreground="#888" LetterSpacing="1"/>
-      </Border>
-    </StackPanel>
-
-    <Button x:Name="pinbtn" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#CC1a1a1a" BorderBrush="#333" BorderThickness="1" CornerRadius="4" Padding="0" Margin="0,6,140,0" ToolTip.Tip="Always on top (click to toggle)" ZIndex="999" Width="28" Height="28">
-      <Viewbox Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Path x:Name="pinicon" Fill="#555" Data="M12 2C11.5 2 11 2.19 10.59 2.59L7.29 5.88L6.58 5.17L5.17 6.58L5.93 7.34C4.38 8.9 3.59 10.58 3.58 10.59C3.25 11.13 3.21 11.79 3.5 12.36L5.14 10.73L8.96 14.55L3 20.5L4.5 22L10.45 16.04L14.27 19.86L12.64 21.5C13.21 21.79 13.87 21.75 14.41 21.42C14.42 21.41 16.1 20.62 17.66 19.07L18.42 19.83L19.83 18.42L19.12 17.71L22.41 14.41C23.2 13.63 23.2 12.36 22.41 11.59L13.41 2.59C13 2.19 12.5 2 12 2Z"/>
-      </Viewbox>
-    </Button>
-
-    <Grid Margin="12,40,12,12">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
-
-      <Border x:Name="roomborder" Grid.Row="0" BorderBrush="#2a2a2a" BorderThickness="1" CornerRadius="6" Background="#01000000" Padding="0" ClipToBounds="True">
-        <Panel>
-          <local:RoomCanvas x:Name="roomcanvas"/>
-          <Canvas x:Name="overlaycanvas" IsHitTestVisible="True"/>
-        </Panel>
-      </Border>
-
-      <Border Grid.Row="1" Background="#CC1a1a1a" CornerRadius="6" Margin="0,10,0,0" Padding="12,10" BorderBrush="#333" BorderThickness="1">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-          </Grid.ColumnDefinitions>
-
-          <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-            <CheckBox x:Name="autoadjustcheck" Content="Auto-adjust height" IsChecked="True" Foreground="#aaa" FontSize="10"/>
-            <CheckBox x:Name="placeontopcheck" Content="Place on top" IsChecked="False" Foreground="#aaa" FontSize="10" ToolTip.Tip="Place items at higher Y to render above other furniture"/>
-          </StackPanel>
-
-          <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
-            <Button x:Name="textwriterbtn" Content="Text Writer" Background="#252525" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="14,6" FontSize="11" Foreground="#ddd"/>
-            <Button x:Name="svgloaderbtn" Content="SVG Loader" Background="#252525" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="14,6" FontSize="11" Foreground="#ddd"/>
-            <Button x:Name="drawerbtn" Content="Free Draw" Background="#252525" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="14,6" FontSize="11" Foreground="#ddd"/>
-
-            <Border x:Name="actionseparator" Width="1" Height="20" Background="#444" Margin="8,0" IsVisible="False"/>
-
-            <Button x:Name="clearallbtn" Content="Clear All" Background="#4a2a2a" BorderBrush="#6a3a3a" BorderThickness="1" CornerRadius="6" Padding="12,6" FontSize="11" Foreground="#ddd" IsVisible="False"/>
-            <Button x:Name="sendserverbtn" Content="Send to Server" Background="#2a5a3a" BorderBrush="#3a7a4a" BorderThickness="1" CornerRadius="6" Padding="14,6" FontSize="11" Foreground="#ddd" FontWeight="SemiBold" IsVisible="False"/>
-          </StackPanel>
-
-          <Border Grid.Column="2" Background="#1a1a1a" CornerRadius="4" Padding="4,2" BorderBrush="#333" BorderThickness="1">
-            <StackPanel Orientation="Horizontal" Spacing="2">
-              <Button x:Name="zoomoutbtn" Width="28" Height="24" Background="Transparent" BorderThickness="0" Padding="0" CornerRadius="3" ToolTip.Tip="Zoom Out (0.5x)">
-                <Viewbox Width="12" Height="12">
-                  <Path Fill="#888" Data="M19,13H5V11H19V13Z"/>
-                </Viewbox>
-              </Button>
-              <Button x:Name="zoomnormalbtn" Width="36" Height="24" Background="#333" BorderThickness="0" Padding="0" CornerRadius="3" ToolTip.Tip="Normal (1x)">
-                <TextBlock x:Name="zoomlabel" Text="1x" FontSize="10" Foreground="#aaa" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-              </Button>
-              <Button x:Name="zoominbtn" Width="28" Height="24" Background="Transparent" BorderThickness="0" Padding="0" CornerRadius="3" ToolTip.Tip="Zoom In (2x)">
-                <Viewbox Width="12" Height="12">
-                  <Path Fill="#888" Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
-                </Viewbox>
-              </Button>
+  <Grid RowDefinitions="42,*,7">
+    <Border x:Name="titlebar" Grid.Row="0" Background="{DynamicResource ChromeBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <StackPanel Orientation="Horizontal" Margin="15,0" VerticalAlignment="Center" Spacing="10">
+          <Button x:Name="settings_button" Classes="flat" Padding="4" Width="26" ToolTip.Tip="Show / hide settings" AutomationProperties.Name="Show or hide settings">
+            <Path Data="M1,1 L17,1 L17,15 L1,15 Z M6,1 L6,15" Stroke="#33483B" StrokeThickness="1.5" Width="18" Height="16" />
+          </Button>
+          <TextBlock Text="WallAligner" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" />
+        </StackPanel>
+        <Grid Grid.Column="1" ColumnDefinitions="*,140" Margin="0,0,10,0">
+          <TextBlock x:Name="room_title" Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+          <TextBlock x:Name="movement_status" Grid.Column="1" FontSize="12" Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        </Grid>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="3" Margin="0,3,5,3">
+          <ToggleButton x:Name="pin_button" Classes="pin" Width="34" Height="34" Padding="8" IsChecked="True" ToolTip.Tip="Keep window on top" AutomationProperties.Name="Keep window on top">
+            <Path Data="M4,0 L12,0 M6,0 L6,6 L2,10 L14,10 L10,6 L10,0 M8,10 L8,16" StrokeThickness="1.5" Width="16" Height="16" />
+          </ToggleButton>
+          <Button x:Name="minimize_button" Classes="flat" Width="36" Padding="8" ToolTip.Tip="Minimize" AutomationProperties.Name="Minimize">
+            <Path Data="M0,5 L12,5" Stroke="#33483B" StrokeThickness="1.5" Width="12" Height="10" />
+          </Button>
+          <Button x:Name="maximize_button" Classes="flat" Width="36" Padding="8" ToolTip.Tip="Maximize / restore" AutomationProperties.Name="Maximize or restore">
+            <Path Data="M0,0 L10,0 L10,10 L0,10 Z" Stroke="#33483B" StrokeThickness="1.5" Width="10" Height="10" />
+          </Button>
+          <Button x:Name="close_button" Classes="flat" Width="36" Padding="8" ToolTip.Tip="Close" AutomationProperties.Name="Close">
+            <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="#33483B" StrokeThickness="1.5" Width="10" Height="10" />
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+    <Grid x:Name="workspace" Grid.Row="1" Grid.RowSpan="2" RowDefinitions="*,7" ColumnDefinitions="244,*,7">
+      <Border x:Name="collapsed_edge" IsVisible="False" Background="{DynamicResource ChromeBrush}" />
+      <Border x:Name="tool_panel" Grid.RowSpan="2" Background="{DynamicResource PanelBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0">
+        <Grid RowDefinitions="Auto,*,Auto">
+          <Border x:Name="tool_header" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="14,12">
+            <StackPanel Spacing="8">
+            <UniformGrid Columns="2" Rows="2">
+              <ToggleButton x:Name="select_tool" Classes="tool" Content="Select" IsChecked="True" Margin="0,0,4,4" />
+              <ToggleButton x:Name="text_tool" Classes="tool" Content="Text" Margin="4,0,0,4" />
+              <ToggleButton x:Name="svg_tool" Classes="tool" Content="SVG / path" Margin="0,4,4,0" />
+              <ToggleButton x:Name="draw_tool" Classes="tool" Content="Draw" Margin="4,4,0,0" />
+            </UniformGrid>
+            <Button x:Name="grid_button" Content="Grid alignment" />
             </StackPanel>
           </Border>
+        <ScrollViewer x:Name="settings_scroll" Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Margin="14,12" Spacing="8">
+            <StackPanel x:Name="objects_panel" IsVisible="False" Spacing="8">
+              <TextBlock Text="Objects" FontWeight="SemiBold" />
+              <ListBox x:Name="objects_list" SelectionMode="Multiple" MaxHeight="130" MinHeight="40">
+                <ListBox.ItemTemplate>
+                  <DataTemplate><TextBlock Text="{Binding label}" TextTrimming="CharacterEllipsis" /></DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+              <Border Height="1" Background="{DynamicResource RuleBrush}" Margin="0,6" />
+            </StackPanel>
+            <StackPanel x:Name="selection_panel" Spacing="8">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="Selection" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <TextBlock x:Name="selected_count" Grid.Column="1" Text="0 items" Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center" />
+              </Grid>
+              <ComboBox x:Name="selection_type" PlaceholderText="Furniture type" />
+              <Button x:Name="select_type" Content="Select all of this type" IsEnabled="False" />
+              <StackPanel x:Name="layer_panel" IsVisible="False" Spacing="5">
+                <Grid ColumnDefinitions="*,60" ColumnSpacing="8">
+                  <TextBlock Text="Z-index" VerticalAlignment="Center" />
+                  <TextBox x:Name="layer_input" Grid.Column="1" Classes="number" Text="0" />
+                </Grid>
+                <Slider x:Name="layer_slider" Minimum="0" Maximum="64" TickFrequency="1" IsSnapToTickEnabled="True" />
+              </StackPanel>
+            </StackPanel>
+            <StackPanel x:Name="pattern_panel" IsVisible="False" Spacing="8">
+              <Grid ColumnDefinitions="*,*">
+                <Button x:Name="new_drawing" Content="New text" Margin="0,0,4,0" />
+                <Button x:Name="duplicate_drawing" Grid.Column="1" Content="Duplicate" Margin="4,0,0,0" />
+              </Grid>
+              <StackPanel x:Name="pattern_editor" Spacing="8">
+              <TextBlock Classes="label" Text="Furniture to arrange" />
+              <ComboBox x:Name="furniture_input" />
+              <TextBlock x:Name="available_count" Classes="hint" Text="Uses furniture already in the room." />
+              <StackPanel x:Name="text_panel" Spacing="6">
+                <TextBlock Classes="label" Text="Font" />
+                <ComboBox x:Name="font_input" />
+              </StackPanel>
+              <StackPanel x:Name="svg_panel" IsVisible="False" Spacing="6">
+                <TextBlock Classes="label" Text="SVG or path data" />
+                <TextBox x:Name="svg_input" AcceptsReturn="True" Height="100" TextWrapping="Wrap"
+                         PlaceholderText="Paste an SVG or path" />
+                <Button x:Name="open_svg" Content="Open SVG file" />
+              </StackPanel>
+              <StackPanel x:Name="draw_panel" IsVisible="False" Spacing="6">
+                <TextBlock Classes="label" Text="Shape" />
+                <ComboBox x:Name="shape_input">
+                  <ComboBoxItem Content="Freehand" />
+                  <ComboBoxItem Content="Rectangle" />
+                  <ComboBoxItem Content="Ellipse" />
+                  <ComboBoxItem Content="Triangle" />
+                  <ComboBoxItem Content="Line" />
+                  <ComboBoxItem Content="Star" />
+                  <ComboBoxItem Content="Heart" />
+                </ComboBox>
+                <TextBlock Classes="hint" Text="For freehand, drag on the canvas. Press Move to place the drawing." />
+              </StackPanel>
+              <Grid ColumnDefinitions="*,*" Margin="0,8,0,0">
+                <StackPanel Margin="0,0,5,0">
+                  <TextBlock Text="Width (px)" Margin="0,0,0,5" />
+                  <TextBox x:Name="width_input" Text="300" Classes="number" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                  <TextBlock Text="Rotation" Margin="0,0,0,5" />
+                  <TextBox x:Name="angle_input" Text="0" Classes="number" />
+                </StackPanel>
+              </Grid>
+              <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,5">
+                <TextBlock Text="Item count" VerticalAlignment="Center" />
+                <CheckBox x:Name="all_items" Grid.Column="1" Content="All available" FontSize="12" MinHeight="24" />
+              </Grid>
+              <TextBox x:Name="count_input" Text="50" Classes="number" />
+              <Button x:Name="preview_button" Content="Refresh preview" />
+              </StackPanel>
+
+            </StackPanel>
+            <Border Height="1" Background="{DynamicResource RuleBrush}" Margin="0,8" />
+            <Grid x:Name="move_controls" ColumnDefinitions="42,42,42" RowDefinitions="38,38" ColumnSpacing="3" RowSpacing="3" HorizontalAlignment="Center">
+              <TextBox x:Name="step_input" Text="1" Classes="number" MinWidth="0" Width="42" Height="34" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTip.Tip="Movement step" AutomationProperties.Name="Movement step" />
+              <Button x:Name="nudge_up" Grid.Column="1" ToolTip.Tip="Move up"><Path Data="M2,12 L10,4 L18,12 M10,4 L10,20" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></Button>
+              <Button x:Name="nudge_left" Grid.Row="1" ToolTip.Tip="Move left"><Path Data="M12,2 L4,10 L12,18 M4,10 L20,10" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></Button>
+              <Button x:Name="nudge_down" Grid.Column="1" Grid.Row="1" ToolTip.Tip="Move down"><Path Data="M2,8 L10,16 L18,8 M10,0 L10,16" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></Button>
+              <Button x:Name="nudge_right" Grid.Column="2" Grid.Row="1" ToolTip.Tip="Move right"><Path Data="M8,2 L16,10 L8,18 M0,10 L16,10" Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" /></Button>
+            </Grid>
+            <CheckBox x:Name="front_input" Content="Place on top layer" IsVisible="False" FontSize="12" ToolTip.Tip="Use a wall position beyond the room so the items render in front." />
+            <ToggleButton x:Name="capture_button" Content="Move view / select area" IsVisible="False"
+                          ToolTip.Tip="Temporarily capture the whole overlay for selecting or panning. Turn off to click the game." />
+          </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Margin="14,6,14,8" Spacing="5">
+          <TextBlock x:Name="status_text" IsVisible="False" TextWrapping="Wrap" MaxHeight="44" FontSize="11" Foreground="#A84638" />
+        <StackPanel x:Name="object_actions" IsVisible="False" Margin="14,8,14,10" Spacing="5">
+          <Button x:Name="apply_button" Classes="primary" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Grid ClipToBounds="True">
+              <Border x:Name="move_fill" Background="#40FFFFFF" Opacity="0" IsHitTestVisible="False" RenderTransformOrigin="0%,50%">
+                <Border.RenderTransform><ScaleTransform ScaleX="0" /></Border.RenderTransform>
+              </Border>
+              <TextBlock Text="Move" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="11,7" />
+            </Grid>
+          </Button>
+          <Button x:Name="clear_preview" Content="Remove selection" Classes="flat" />
+        </StackPanel>
+        </StackPanel>
         </Grid>
+      </Border>
+      <local:WallCanvas x:Name="canvas" Grid.Column="1" />
+      <Canvas x:Name="text_layer" Grid.Column="1" ClipToBounds="True">
+          <TextBox x:Name="text_editor" Classes="inline_editor" IsVisible="False" AcceptsReturn="True" TextWrapping="NoWrap" MinWidth="0" MinHeight="0" Padding="5" BorderThickness="1" Background="Transparent" BorderBrush="#85C8E8" Foreground="#F2C464" CaretBrush="#F2C464" SelectionBrush="#5575A98B" SelectionForegroundBrush="#F2C464" RenderTransformOrigin="50%,50%" UseLayoutRounding="False" />
+      </Canvas>
+      <Border x:Name="canvas_toolbar" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+              Background="{DynamicResource PanelBrush}" Margin="12" Padding="4" CornerRadius="4">
+        <StackPanel Orientation="Horizontal" Spacing="3">
+          <Button x:Name="undo_button" Content="Undo" ToolTip.Tip="Undo (Ctrl+Z)" />
+          <Button x:Name="redo_button" Content="Redo" ToolTip.Tip="Redo (Ctrl+Y)" />
+          <Border Width="1" Background="{DynamicResource RuleBrush}" Margin="4,3" />
+          <ToggleButton x:Name="zoom_button" Content="Zoom" Width="76" Height="34" Padding="8,5" ToolTip.Tip="Half size. Click again for original size." />
+          <ToggleButton x:Name="clickthrough_button" Content="Click-through" Width="112" Height="34" Padding="8,5" ToolTip.Tip="Let clicks through empty areas reach the game. Turn off to edit on the tinted surface." />
+          <Button x:Name="center_button" Content="Center" ToolTip.Tip="Center the room without changing its size" />
+        </StackPanel>
+      </Border>
+      <Border x:Name="resize_edge" Grid.Column="2" Background="{DynamicResource ChromeBrush}" Cursor="SizeWestEast" ToolTip.Tip="Resize window">
+        <Border Width="1" Height="42" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      </Border>
+      <Border x:Name="bottom_edge" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Background="{DynamicResource ChromeBrush}" Cursor="SizeNorthSouth">
+      <Border Height="1" Width="42" Background="{DynamicResource BorderBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" />
       </Border>
     </Grid>
   </Grid>
-</Window>
+</UserControl>
